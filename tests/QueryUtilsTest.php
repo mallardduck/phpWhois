@@ -33,6 +33,7 @@ class QueryUtilsTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['123.123.123.123'],
+            ['8.8.8.8'],
         ];
     }
 
@@ -144,9 +145,24 @@ class QueryUtilsTest extends \PHPUnit_Framework_TestCase
             ['domain.1com'],
             ['domain.co.u'],
             ['xn--e1afmkfd.xn--80akhb.yknj4f'],
+            ['президент.рф2'],
+        ];
+    }
+
+    /**
+     * @dataProvider exceptionDomainsProvider
+     */
+    public function testExceptionDomain($domain)
+    {
+        $this->setExpectedException(TrueBV\Exception\LabelOutOfBoundsException::class);
+        $this->assertFalse($this->q->validDomain($domain));
+    }
+
+    public function exceptionDomainsProvider()
+    {
+        return [
             ['xn--e1afmkfd.xn--80akhbyknj4f.'],
             ['президент.рф.'],
-            ['президент.рф2'],
         ];
     }
 
